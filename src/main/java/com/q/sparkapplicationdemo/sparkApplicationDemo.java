@@ -1,9 +1,7 @@
 package com.q.sparkapplicationdemo;
 
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.Dataset;
-import org.apache.spark.sql.Row;
-import org.apache.spark.sql.SparkSession;
+import org.apache.spark.sql.*;
 import org.apache.spark.sql.types.DataTypes;
 import org.apache.spark.sql.types.Metadata;
 import org.apache.spark.sql.types.StructField;
@@ -55,8 +53,17 @@ public class sparkApplicationDemo {
             Dataset<Row> df = spark.read()
                     .option("header", "true")
                     .schema(schema)
-                    .csv(csvDirectoryPath + "/2019-Oct.csv")
-                    .limit(10);
+                    .csv(csvDirectoryPath + "/2019-Oct.csv");
+//                    .limit(5000);
+
+            // KST 기준으로 daily 추가
+            df = df.withColumn("event_date", functions.from_utc_timestamp(df.col("event_time"), "Asia/Seoul").cast("date"));
+
+            // KST 기준으로 daily partition 으로 저장 (Parquet with Snappy compression)
+            df.write()
+                    .partitionBy("event_date")
+                    .mode(SaveMode.Append)
+                    .parquet("/Users/q_dev/project/sparkDemo/parquet");
 
             df.show();
 

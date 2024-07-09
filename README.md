@@ -11,8 +11,8 @@ https://www.kaggle.com/mkechinov/ecommerce-behavior-data-from-multi-category-sto
 - [x] spark session 연결
 - [x] csv data 확인
 - [x] csv data schema
-- [ ] KST 기준 daily partition 처리
-- [ ] 재처리 후 parquet, snappy 처리
+- [x] KST 기준 daily partition 처리
+- [x] 재처리 후 parquet, snappy 처리
 - [ ] External Table 방식으로 설계
 - [ ] 추가 기간 처리에 대응가능하도록 구현
 - [ ] 배치 장애시 복구를 위한 장치 구현
