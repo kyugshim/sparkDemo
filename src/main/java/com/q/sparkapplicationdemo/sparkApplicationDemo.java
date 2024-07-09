@@ -21,7 +21,7 @@ public class sparkApplicationDemo {
                 .builder()
                 .appName("sparkApplicationDemo")
                 .master("local[*]")
-//                .config("spark.sql.warehouse.dir", "/user/hive/warehouse")
+                .config("spark.sql.warehouse.dir", "/user/hive/warehouse")
                 .enableHiveSupport()
                 .getOrCreate();
 
