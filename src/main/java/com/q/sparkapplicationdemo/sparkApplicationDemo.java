@@ -53,8 +53,8 @@ public class sparkApplicationDemo {
             Dataset<Row> df = spark.read()
                     .option("header", "true")
                     .schema(schema)
-                    .csv(csvDirectoryPath + "/2019-Oct.csv");
-//                    .limit(5000);
+                    .csv(csvDirectoryPath + "/2019-Oct.csv")
+                    .limit(5000);
 
             // KST 기준으로 daily 추가
             df = df.withColumn("event_date", functions.from_utc_timestamp(df.col("event_time"), "Asia/Seoul").cast("date"));
@@ -64,6 +64,21 @@ public class sparkApplicationDemo {
                     .partitionBy("event_date")
                     .mode(SaveMode.Append)
                     .parquet("/Users/q_dev/project/sparkDemo/parquet");
+
+            // external Hive table 필요시 생성
+            spark.sql("CREATE EXTERNAL TABLE IF NOT EXISTS userActivityLog (" +
+                    "event_time TIMESTAMP, " +
+                    "event_type STRING, " +
+                    "product_id STRING, " +
+                    "category_id STRING, " +
+                    "category_code STRING, " +
+                    "brand STRING, " +
+                    "price DOUBLE, " +
+                    "user_id STRING, " +
+                    "user_session STRING" +
+                    ") PARTITIONED BY (event_date DATE) " +
+                    "STORED AS PARQUET " +
+                    "LOCATION '/Users/q_dev/project/sparkDemo/parquet'");
 
             df.show();
 
