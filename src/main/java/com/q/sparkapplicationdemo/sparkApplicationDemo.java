@@ -39,9 +39,17 @@ public class sparkApplicationDemo {
      */
     public static void dataProcessWithRecovery(SparkSession spark, String csvDirectoryPath) {
         try {
-            // CSV 파일
+            // CSV 파일 data schema
             StructType schema = new StructType(new StructField[]{
-                    new StructField("event_time", DataTypes.TimestampType,true, Metadata.empty())
+                    new StructField("event_time", DataTypes.TimestampType,true, Metadata.empty()),
+                    new StructField("event_type", DataTypes.StringType, true, Metadata.empty()),
+                    new StructField("product_id", DataTypes.StringType, true, Metadata.empty()),
+                    new StructField("category_id", DataTypes.StringType, true, Metadata.empty()),
+                    new StructField("category_code", DataTypes.StringType, true, Metadata.empty()),
+                    new StructField("brand", DataTypes.StringType, true, Metadata.empty()),
+                    new StructField("price", DataTypes.DoubleType, true, Metadata.empty()),
+                    new StructField("user_id", DataTypes.StringType, true, Metadata.empty()),
+                    new StructField("user_session", DataTypes.StringType, true, Metadata.empty()),
             });
 
             Dataset<Row> df = spark.read()
