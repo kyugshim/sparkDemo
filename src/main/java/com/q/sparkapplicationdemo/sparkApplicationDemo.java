@@ -112,6 +112,7 @@ public class sparkApplicationDemo {
      * @throws IOException
      */
     public static void checkPointSuccessfulBatch(String checkPointPath, String[] processedFiles) throws IOException{
+        // hadoop FS를 사용해서 로컬 파일 사용
         Configuration conf = new Configuration();
         conf.set("fs.hdfs.impl", "file:///");
         FileSystem fs = FileSystem.get(conf);
@@ -128,11 +129,14 @@ public class sparkApplicationDemo {
         System.out.println("Checkpoint successful");
     }
     private static Set<String> getProcessedFiles(String checkPointPath) throws IOException {
+        // hadoop FS를 사용해서 로컬 파일 사용
         Configuration conf = new Configuration();
         conf.set("fs.hdfs.impl", "file:///");
         FileSystem fs = FileSystem.get(conf);
         Path checkpointFile = new Path(checkPointPath + "/last_batch");
+
         Set<String> processedFiles = new HashSet<>();
+
         if (fs.exists(checkpointFile)) {
             FSDataInputStream in = fs.open(checkpointFile);
             while (in.available() > 0) {
