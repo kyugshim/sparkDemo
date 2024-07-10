@@ -15,6 +15,8 @@ https://www.kaggle.com/mkechinov/ecommerce-behavior-data-from-multi-category-sto
 - [x] 재처리 후 parquet, snappy 처리
 - [x] External Table 방식으로 설계
 - [ ] 추가 기간 처리에 대응가능하도록 구현
+- [ ] fileSystem Hadoop dependency 추가
+- [ ] 성공 배치 checkpoint 추가
 - [ ] 배치 장애시 복구를 위한 장치 구현
 
 Spark Application 구현에 사용가능한 언어는 **Scala나 Java**로 제한합니다.
